@@ -154,7 +154,7 @@ class GenericProductView (ListCreateAPIView):
 # partial_update (WHICH IS WORK LIKE PATCH METHOD)
 # destroy  (WHICH IS DELETE SPECIFIC PRODUCT WORK LIKE DELETE METHOD)
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.select_related('category').all()
+    
     serializer_class = ProductModelSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     filterset_class = ProductFilter
@@ -163,6 +163,9 @@ class ProductViewSet(ModelViewSet):
     ordering_fields = ['price']
     permission_classes = [AdminOrReadOnly]
     http_method_names = ['get', 'post', 'delete', 'patch']
+    
+    def get_queryset(self):
+        return Product.objects.prefetch_related('images').all()
 
     @swagger_auto_schema(
             operation_summary='Get all the product from here',
