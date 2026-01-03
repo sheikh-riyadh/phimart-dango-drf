@@ -19,6 +19,18 @@ ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 AUTH_USER_MODEL = 'users.User'
 
 
+
+
+
+
+EMAIL_BACKEND = config('EMAIL_BACKEND') 
+EMAIL_HOST = config('EMAIL_HOST') 
+EMAIL_PORT = config('EMAIL_PORT') 
+EMAIL_USE_TLS = config('EMAIL_USE_TLS') 
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') 
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD') 
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -180,6 +192,9 @@ SIMPLE_JWT = {
 
 
 DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
+    'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
     'SERIALIZERS': {
          'user_create': 'users.serializer.UserCreateSerializer',
          'current_user': 'users.serializer.CurrentUserSerializer',
